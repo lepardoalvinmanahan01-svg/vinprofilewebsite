@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alvin Manahan Lepardo | Works</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plus Jakarta Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            500: '#18181b',
+                            600: '#09090b',
+                            accent: '#6366f1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e4e4e7;
+            border-radius: 99px;
+        }
+        
+        /* Modern Minimalist Glass Header */
+        .glass-header {
+            background: rgba(250, 250, 250, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .dark .glass-header {
+            background: rgba(9, 9, 11, 0.8);
+        }
+        
+        /* Interactive Card Zoom and Float */
+        .work-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .work-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-neutral-800 dark:bg-zinc-950 dark:text-zinc-200 min-h-screen font-sans transition-colors duration-300">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 w-full border-b border-neutral-200/50 dark:border-zinc-900 glass-header transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div>
+                <a href="index.html" class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-neutral-500 hover:text-brand-accent dark:text-zinc-400 dark:hover:text-white transition-all">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Profile
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Theme toggle button -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-zinc-900 text-neutral-500 dark:text-zinc-400 transition-all" aria-label="Toggle Theme">
+                    <!-- Sun Icon -->
+                    <svg id="theme-sun" class="w-4.5 h-4.5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.828 0l-.707-.707m2.828-9.9a5 5 0 11-7.072 7.072 5 5 0 017.072-7.072z"></path>
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg id="theme-moon" class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        
+        <!-- INTRO SECTION -->
+        <div class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
+                OTHER SAMPLE WORKS
+            </h1>
+            <div class="mt-4 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <p class="text-neutral-500 dark:text-zinc-400 text-base max-w-xl leading-relaxed">
+                    This section features a compilation of my sample works demonstrating technical proficiency in administrative and multimedia tools, including <b>Microsoft Office (Word, Excel), Google Workspace (Docs, Spreadsheets, Forms), Blender 3D,</b> and streaming/recording software like OBS and Streamlabs.
+                </p>
+                <!-- Live Count Stat Badge -->
+                <div class="bg-neutral-100 dark:bg-zinc-900 px-4 py-2.5 rounded-xl border border-neutral-200/60 dark:border-zinc-800/80 flex items-center gap-3 w-fit">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold tracking-wide text-neutral-600 dark:text-zinc-300">
+                        Total Items: <span id="project-count" class="font-bold text-neutral-900 dark:text-white">50</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEARCH FILTER -->
+        <div class="mb-10 bg-white dark:bg-zinc-900/40 p-4 rounded-2xl border border-neutral-200/50 dark:border-zinc-900/60">
+            <!-- Search Input -->
+            <div class="relative w-full">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-neutral-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </span>
+                <input type="text" id="search-input" placeholder="Search case studies..." class="w-full pl-10 pr-4 py-2.5 text-sm bg-neutral-50 dark:bg-zinc-900 border border-neutral-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-neutral-800 dark:text-zinc-200">
+            </div>
+        </div>
+
+        <!-- WORK CARDS GRID -->
+        <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic simple cards will appear here -->
+        </div>
+
+    </main>
+
+    <!-- LIGHTBOX / FULL IMAGE MODAL -->
+    <div id="image-lightbox" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeLightbox(event)">
+        <!-- Close Button (Top Right) -->
+        <button class="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all focus:outline-none" aria-label="Close Preview" onclick="toggleLightbox(false)">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Main Lightbox Container -->
+        <div class="relative max-w-4xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
+            <!-- Full Screen/Original View Link -->
+            <div class="absolute -top-10 left-0 flex items-center gap-3">
+                <span id="lightbox-title" class="text-white text-sm font-semibold truncate max-w-xs sm:max-w-md">Project Title</span>
+            </div>
+            
+            <div class="absolute -top-12 right-0">
+                <a id="lightbox-original-link" href="#" target="_blank" class="flex items-center gap-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-all">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                    Original Image
+                </a>
+            </div>
+
+            <!-- Image Viewframe -->
+            <div class="bg-neutral-900/60 border border-white/10 rounded-2xl p-1 overflow-hidden max-h-[75vh] flex items-center justify-center shadow-2xl">
+                <img id="lightbox-image" src="" alt="Project Preview" class="max-h-[70vh] max-w-full object-contain rounded-xl select-none">
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS & CONTROLLERS -->
+    <script>
+        // Minimalistic dataset without the "category" property
+        const projectsData = [
+            {
+                id: "case-1",
+                title: "Sample OBS Live Streaming/Recording",
+                image: "OBS 1.jpg",
+                fallbackImage: "OBS 1.jpg"
+            },
+            {
+                id: "case-2",
+                title: "Sample Google Forms No. 1",
+                image: "Form 1.png",
+                fallbackImage: "Form 1.png"
+            },
+            {
+                id: "case-3",
+                title: "Sample Google Forms No. 2",
+                image: "Form 2 .png",
+                fallbackImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "case-4",
+                title: "Sample Blender No. 1",
+                image: "Blender 1.jpg",
+                fallbackImage: "Blender 1.jpg"
+            },
+            {
+                id: "case-5",
+                title: "Sample Blender No. 2",
+                image: "Blender 2.jpg",
+                fallbackImage: "Blender 2.jpg"
+            },
+            {
+                id: "case-6",
+                title: "Sample Blender No. 3",
+                image: "Blender 3.jpg",
+                fallbackImage: "Blender 3.jpg"
+            },
+            {
+                id: "case-7",
+                title: "Sample Blender No. 4",
+                image: "Blender 4.jpg",
+                fallbackImage: "Blender 4.jpg"
+            },
+            {
+                id: "case-8",
+                title: "Sample Google Docs No. 1",
+                image: "Google Docs 1 .png",
+                fallbackImage: "Google Docs 1 .png"
+            },
+            {
+                id: "case-9",
+                title: "Sample Google Docs No. 2",
+                image: "Google Docs 2 .png",
+                fallbackImage: "Google Docs 2 .png"
+            },
+            {
+                id: "case-10",
+                title: "Sample Google Docs No. 3",
+                image: "Google Docs 3 .png",
+                fallbackImage: "Google Docs 3 .png"
+            },
+            {
+                id: "case-11",
+                title: "Google Spreadsheet No. 1",
+                image: "Spreadsheet 1.png",
+                fallbackImage: "Spreadsheet 1.png"
+            },
+            {
+                id: "case-12",
+                title: "Google Spreadsheet No. 2",
+                image: "Spreadsheet 2.png",
+                fallbackImage: "Spreadsheet 2.png"
+            },
+        ];
+
+        let searchQuery = '';
+
+        // PAGE LOAD INITIALIZER
+        window.onload = function() {
+            // Apply theme configuration
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-moon').classList.add('hidden');
+                document.getElementById('theme-sun').classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-moon').classList.remove('hidden');
+                document.getElementById('theme-sun').classList.add('hidden');
+            }
+
+            renderProjects();
+
+            // Set up Search Listener
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderProjects();
+            });
+
+            // Set up Escape Key Listener to close Lightbox
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    toggleLightbox(false);
+                }
+            });
+        };
+
+        // THEME ACTION toggler
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            if (isDark) {
+                document.getElementById('theme-moon').classList.add('hidden');
+                document.getElementById('theme-sun').classList.remove('hidden');
+            } else {
+                document.getElementById('theme-moon').classList.remove('hidden');
+                document.getElementById('theme-sun').classList.add('hidden');
+            }
+        });
+
+        // BEAUTIFUL CLEAN CARD RENDERER WITH FILTER LOGIC
+        function renderProjects() {
+            const grid = document.getElementById('works-grid');
+            grid.innerHTML = '';
+            
+            // Filter Dataset
+            const filteredData = projectsData.filter(project => {
+                return project.title.toLowerCase().includes(searchQuery) || project.description.toLowerCase().includes(searchQuery);
+            });
+
+            // Update Counter Badge
+            document.getElementById('project-count').innerText = filteredData.length;
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center">
+                        <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="mt-4 text-sm font-semibold text-neutral-900 dark:text-white">No results found</h3>
+                        <p class="mt-1 text-sm text-neutral-500 dark:text-zinc-400">Try adjusting your search criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredData.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = "work-card bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-neutral-200/50 dark:border-zinc-900/80 hover:shadow-lg transition-all duration-300 flex flex-col cursor-pointer";
+                
+                // Set click action on the card to open lightbox
+                card.onclick = () => openLightbox(project.title, project.image, project.fallbackImage);
+
+                card.innerHTML = `
+                    <!-- Sleek Image Wrapper with a hover zoom effect -->
+                    <div class="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-zinc-950 group">
+                        <img id="project-img-${index}" src="${project.image}" 
+                             onerror="this.onerror=null; this.src='${project.fallbackImage}'; this.dataset.fallbackApplied='true';" 
+                             alt="${project.title}" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        
+                        <!-- Smooth Hover Overlay with Preview Icon -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <span class="p-3 bg-white/90 dark:bg-zinc-900/90 rounded-full shadow-lg text-neutral-800 dark:text-white transform scale-90 group-hover:scale-100 transition-all duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Clean Details Area (Only displaying Title) -->
+                    <div class="p-4 flex-1 flex flex-col justify-center">
+                        <h3 class="text-sm md:text-base font-bold text-neutral-900 dark:text-white leading-snug">
+                            ${project.title}
+                        </h3>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // LIGHTBOX UTILITIES
+        function openLightbox(title, initialSrc, fallbackSrc) {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImg = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const originalLink = document.getElementById('lightbox-original-link');
+
+            // Apply title & download/original image target
+            lightboxTitle.innerText = title;
+            originalLink.href = initialSrc;
+
+            // Preload the target preview image
+            lightboxImg.src = initialSrc;
+            
+            // Re-apply error handling specifically for modal to prevent blank load
+            lightboxImg.onerror = function() {
+                this.onerror = null;
+                this.src = fallbackSrc;
+                originalLink.href = fallbackSrc;
+            };
+
+            // Transition fade-in logic
+            toggleLightbox(true);
+        }
+
+        function closeLightbox(event) {
+            // Close if clicking wrapper background
+            if (event.target.id === 'image-lightbox') {
+                toggleLightbox(false);
+            }
+        }
+
+        function toggleLightbox(show) {
+            const lightbox = document.getElementById('image-lightbox');
+            if (show) {
+                lightbox.classList.remove('hidden');
+                // Allow browser layout frame to bind class change transition
+                setTimeout(() => {
+                    lightbox.classList.remove('opacity-0');
+                }, 10);
+            } else {
+                lightbox.classList.add('opacity-0');
+                // Hide after transition duration completes
+                setTimeout(() => {
+                    lightbox.classList.add('hidden');
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

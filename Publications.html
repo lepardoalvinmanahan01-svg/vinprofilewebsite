@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alvin Manahan Lepardo | Works Gallery</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plus Jakarta Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .canvas-gallery ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 99px;
+        }
+        .canvas-velvet ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 99px;
+        }
+        .canvas-studio ::-webkit-scrollbar-thumb {
+            background: #e4e4e7;
+            border-radius: 99px;
+        }
+
+        /* Ambient Theme Transitions */
+        .ambient-transition {
+            transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Premium Title Underline Hover Effect */
+        .title-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1.5px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .project-item:hover .title-underline::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Scroll reveal class states */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Parallax 3D Card tilt containment */
+        .tilt-container {
+            perspective: 1000px;
+        }
+        .tilt-wrapper {
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        /* Subtle image zoom transition */
+        .tilt-wrapper img {
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    </style>
+</head>
+<body id="gallery-body" class="ambient-transition canvas-gallery bg-[#F5F5F4] text-[#1C1917] min-h-screen font-sans tracking-tight pb-24">
+
+    <!-- MINIMAL HEADER -->
+    <header class="sticky top-0 z-40 w-full border-b border-stone-200/40 backdrop-blur-md transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div>
+                <a href="index.html" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Main Profile
+                </a>
+            </div>
+
+            <!-- THREE-WAY AMBIENT CANVAS MODE SWITCHER -->
+            <div class="flex items-center gap-1.5 bg-stone-200/50 dark:bg-zinc-900/40 p-1 rounded-full border border-stone-300/20">
+                <!-- Gallery mode (Warm cream paper) -->
+                <button onclick="setTheme('gallery')" id="btn-theme-gallery" class="p-2 rounded-full transition-all text-xs font-bold flex items-center gap-1 bg-[#F5F5F4] shadow-sm text-stone-800" title="Gallery mode (Warm Cream)">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#E7E5E4] border border-stone-400"></span>
+                </button>
+                <!-- Velvet mode (Deep organic dark) -->
+                <button onclick="setTheme('velvet')" id="btn-theme-velvet" class="p-2 rounded-full transition-all text-xs font-bold flex items-center gap-1 text-stone-400 hover:text-stone-100" title="Velvet mode (Obsidian)">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#09090b] border border-zinc-700"></span>
+                </button>
+                <!-- Studio mode (Clinical high-contrast white) -->
+                <button onclick="setTheme('studio')" id="btn-theme-studio" class="p-2 rounded-full transition-all text-xs font-bold flex items-center gap-1 text-stone-400 hover:text-stone-900" title="Studio mode (Pure White)">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#FFFFFF] border border-zinc-300"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-6 py-24">
+        
+        <!-- INTRO SECTION -->
+        <div class="mb-32 max-w-2xl reveal-item">
+            <h1 class="text-5xl md:text-6.5xl font-extrabold tracking-tight">
+                Publications & Designs
+            </h1>
+            <p class="opacity-60 mt-6 text-base md:text-lg leading-relaxed font-light">
+                A compilation of my latest work and creative projects in <b>Publications & Design.</b>
+        </div>
+
+        <!-- EDITORIAL CARDLESS ASYMMETRICAL LIST -->
+        <div id="works-grid" class="space-y-36">
+            <!-- Dynamically populated from JS -->
+        </div>
+
+    </main>
+
+    <!-- FULL PHOTO LIGHTBOX MODAL -->
+    <div id="photo-modal" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 md:p-8 bg-black/95 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300" onclick="closeFullPhoto(event)">
+        <!-- Top Action Bar inside Modal -->
+        <div class="absolute top-0 left-0 right-0 h-20 px-6 md:px-12 flex items-center justify-between text-white z-10">
+            <div class="flex flex-col">
+                <span id="modal-title" class="text-xs md:text-sm font-bold tracking-tight">Project Title</span>
+                <span class="text-[9px] uppercase tracking-widest opacity-40">Original Full Photo</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- Direct Full Image Action Link -->
+                <a id="modal-external-link" href="#" target="_blank" class="p-2.5 rounded-full hover:bg-white/10 transition-colors text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 opacity-65 hover:opacity-100 touch-target">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                    <span class="hidden sm:inline">Open Original</span>
+                </a>
+                <!-- Close Button -->
+                <button onclick="closeFullPhoto(null)" class="p-2 rounded-full hover:bg-white/10 transition-colors" aria-label="Close modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Central High-Res Responsive Container -->
+        <div class="relative w-full h-full max-w-5xl flex items-center justify-center select-none pt-12">
+            <img id="modal-image" src="" alt="Original visual display" class="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl scale-95 transition-transform duration-300">
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Fallback Unsplash image library curated specifically with portrait-oriented designs
+        const fallbacks = [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&h=1200&q=80", // Architecture
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&h=1200&q=80", // Digital Geometry
+            "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&h=1200&q=80", // Premium studio setup
+            "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&h=1200&q=80", // Minimal steps architecture
+            "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&h=1200&q=80", // Industrial glass
+            "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&h=1200&q=80", // Editorial workspace
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&h=1200&q=80"  // Modern residential interior
+        ];
+
+        // Curated Case Studies Data Source - updated with generic numerical titles
+        const projectsData = [
+            { id: "case-1", title: "Publication & Design No. 1", image: "Publication 1.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-2", title: "Publication & Design No. 2", image: "Publication 2.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-3", title: "Publication & Design No. 3", image: "Publication 3.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-4", title: "Publication & Design No. 4", image: "Publication 4.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-5", title: "Publication & Design No. 5", image: "Publication 5.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-6", title: "Publication & Design No. 6", image: "Publication 6.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-7", title: "Publication & Design No. 7", image: "Publication 7.png", ratio: "aspect-[3/4]" },
+            { id: "case-8", title: "Publication & Design No. 8", image: "Publication 8.png", ratio: "aspect-[2/3]" },
+            { id: "case-9", title: "Publication & Design No. 9", image: "Publication 9.png", ratio: "aspect-[3/4]" },
+            { id: "case-10", title: "Publication & Design No. 10", image: "Publication 10.png", ratio: "aspect-[2/3]" },
+            { id: "case-11", title: "Publication & Design No. 11", image: "Publication 11.png", ratio: "aspect-[3/4]" },
+            { id: "case-12", title: "Publication & Design No. 12", image: "Publication 12.png", ratio: "aspect-[2/3]" },
+            { id: "case-13", title: "Publication & Design No. 13", image: "Publication 13.png", ratio: "aspect-[3/4]" },
+            { id: "case-14", title: "Publication & Design No. 14", image: "Publication 14.png", ratio: "aspect-[2/3]" },
+            { id: "case-15", title: "Publication & Design No. 15", image: "Publication 15.png", ratio: "aspect-[3/4]" },
+            { id: "case-16", title: "Publication & Design No. 16", image: "Publication 16.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-17", title: "Publication & Design No. 17", image: "Publication 17.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-18", title: "Publication & Design No. 18", image: "Publication 18.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-19", title: "Publication & Design No. 19", image: "Publication 19.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-20", title: "Publication & Design No. 20", image: "Publication 20.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-21", title: "Publication & Design No. 21", image: "Publication 21.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-22", title: "Publication & Design No. 22", image: "Publication 22.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-23", title: "Publication & Design No. 23", image: "Publication 23.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-24", title: "Publication & Design No. 24", image: "Publication 24.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-25", title: "Publication & Design No. 25", image: "Publication 25.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-26", title: "Publication & Design No. 26", image: "Publication 26.jpg", ratio: "aspect-[2/3]" },
+            { id: "case-27", title: "Publication & Design No. 27", image: "Publication 27.jpg", ratio: "aspect-[3/4]" },
+            { id: "case-28", title: "Publication & Design No. 28", image: "Thumbnail.jpg", ratio: "aspect-[2/3]" },
+        ];
+
+        window.onload = function() {
+            // Restore chosen ambient theme style if saved
+            const savedTheme = localStorage.getItem('ambient-canvas-theme') || 'gallery';
+            setTheme(savedTheme);
+
+            renderProjects();
+            initScrollReveal();
+            initParallaxTilt();
+        };
+
+        // Theme management: 3 modes
+        function setTheme(theme) {
+            const body = document.getElementById('gallery-body');
+            if (!body) return;
+            
+            // Clear current theme classes
+            body.classList.remove('canvas-gallery', 'canvas-velvet', 'canvas-studio', 'bg-[#F5F5F4]', 'text-[#1C1917]', 'bg-[#09090b]', 'text-[#F4F4F5]', 'bg-[#FFFFFF]', 'text-[#09090b]');
+            
+            // Clear current button highlight states
+            const btnGallery = document.getElementById('btn-theme-gallery');
+            const btnVelvet = document.getElementById('btn-theme-velvet');
+            const btnStudio = document.getElementById('btn-theme-studio');
+            
+            if (btnGallery) btnGallery.className = "p-2 rounded-full transition-all text-xs font-bold";
+            if (btnVelvet) btnVelvet.className = "p-2 rounded-full transition-all text-xs font-bold text-stone-400";
+            if (btnStudio) btnStudio.className = "p-2 rounded-full transition-all text-xs font-bold text-stone-400";
+
+            if (theme === 'gallery') {
+                body.classList.add('canvas-gallery', 'bg-[#F5F5F4]', 'text-[#1C1917]');
+                if (btnGallery) btnGallery.classList.add('bg-[#E7E5E4]', 'shadow-sm', 'text-stone-800');
+            } else if (theme === 'velvet') {
+                body.classList.add('canvas-velvet', 'bg-[#09090b]', 'text-[#F4F4F5]');
+                if (btnVelvet) btnVelvet.classList.add('bg-zinc-800', 'shadow-sm', 'text-stone-100');
+            } else if (theme === 'studio') {
+                body.classList.add('canvas-studio', 'bg-[#FFFFFF]', 'text-[#09090b]');
+                if (btnStudio) btnStudio.classList.add('bg-zinc-100', 'shadow-sm', 'text-stone-900');
+            }
+            
+            localStorage.setItem('ambient-canvas-theme', theme);
+        }
+
+        // Render projects in asymmetrical layout flow
+        function renderProjects() {
+            const grid = document.getElementById('works-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            
+            projectsData.forEach((project, index) => {
+                const item = document.createElement('div');
+                item.className = "project-item reveal-item flex flex-col lg:flex-row items-center gap-12 lg:gap-24 justify-between";
+                
+                // Switch order on even indexes for architectural layout
+                // True = text on left, image on right
+                // False = image on left, text on right
+                const isEven = index % 2 === 0;
+                
+                // Determine a specific fallback image based on the index to ensure visual variety
+                const fallbackImg = fallbacks[index % fallbacks.length];
+                
+                // Format title string safely to pass into JavaScript callbacks
+                const safeTitle = project.title.replace(/'/g, "\\'");
+                
+                item.innerHTML = `
+                    <!-- 3D Parallax Tilt container optimized for portrait shapes (lg:w-[42%] prevents vertical stretching) -->
+                    <div class="tilt-container w-full lg:w-[42%] ${isEven ? 'lg:order-2' : 'lg:order-1'}">
+                        <!-- Wrapper responds dynamically to the lightbox trigger -->
+                        <div id="wrapper-${project.id}" 
+                             onclick="openFullPhoto(this.querySelector('img').src, '${safeTitle}')" 
+                             class="tilt-wrapper relative ${project.ratio} w-full max-h-[75vh] overflow-hidden rounded-[2rem] bg-neutral-200/20 border border-stone-500/10 shadow-sm cursor-zoom-in group">
+                            
+                            <img id="img-${project.id}" src="${project.image}" alt="${project.title}" 
+                                 onerror="this.onerror=null; this.src='${fallbackImg}';" 
+                                 class="w-full h-full object-cover select-none">
+                            
+                            <!-- Immersive visual Hover action overlay to signal image expand capability -->
+                            <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                <span class="px-5 py-2.5 bg-white/95 dark:bg-zinc-900/95 text-stone-900 dark:text-stone-100 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-md flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                    </svg>
+                                    Full Photo
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details Area optimized for matching portrait height alignment (lg:w-[48%]) -->
+                    <div class="w-full lg:w-[48%] space-y-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}">
+                        <h3 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+                            <span class="title-underline">${project.title}</span>
+                        </h3>
+                        
+                        <!-- Dedicated full-size image viewport button trigger -->
+                        <div class="pt-2">
+                            <button onclick="openFullPhoto(document.getElementById('img-${project.id}').src, '${safeTitle}')" class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase opacity-60 hover:opacity-100 transition-all group touch-target">
+                                Full Photo
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        // Lightbox viewport modal triggers (Full size preview)
+        function openFullPhoto(imageSrc, imageTitle) {
+            const modal = document.getElementById('photo-modal');
+            const modalImg = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalLink = document.getElementById('modal-external-link');
+
+            if (!modal || !modalImg) return;
+
+            // Load data parameters dynamically
+            modalTitle.textContent = imageTitle;
+            modalImg.src = imageSrc;
+            modalLink.href = imageSrc;
+
+            // Trigger structural visibility transitions
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            
+            // Apply scale zoom factor animation delay for premium impact
+            setTimeout(() => {
+                modalImg.classList.remove('scale-95');
+                modalImg.classList.add('scale-100');
+            }, 50);
+
+            // Prevent scroll leaks on viewport page layers
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullPhoto(event) {
+            // Guarantee closing only occurs when hitting explicit triggers, backdrops, or navigation elements
+            if (event && event.target !== event.currentTarget && !event.target.closest('button')) {
+                return; 
+            }
+
+            const modal = document.getElementById('photo-modal');
+            const modalImg = document.getElementById('modal-image');
+
+            if (!modal || !modalImg) return;
+
+            // Animate scale sizing back down
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+
+            // Hide the modal layers gracefully
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+
+            // Restore scroll features to body structures
+            document.body.style.overflow = '';
+        }
+
+        // Close overlay if keyboard "Escape" triggers are asserted
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeFullPhoto(null);
+            }
+        });
+
+        // Intersection Observer scroll reveal setup
+        function initScrollReveal() {
+            const items = document.querySelectorAll('.reveal-item');
+            if (!items.length) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -100px 0px"
+            });
+
+            items.forEach(item => observer.observe(item));
+        }
+
+        // Mousemove Event listeners for Parallax Tilt effect
+        function initParallaxTilt() {
+            const containers = document.querySelectorAll('.tilt-container');
+
+            containers.forEach(container => {
+                const wrapper = container.querySelector('.tilt-wrapper');
+                if (!wrapper) return;
+                const img = wrapper.querySelector('img');
+                if (!img) return;
+
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // x position inside container
+                    const y = e.clientY - rect.top;  // y position inside container
+                    
+                    // Normalize mouse values (-0.5 to 0.5)
+                    const xPercent = (x / rect.width) - 0.5;
+                    const yPercent = (y / rect.height) - 0.5;
+                    
+                    // Calculate degree values
+                    const tiltX = (yPercent * 10).toFixed(2); // max tilt degrees on Y axis
+                    const tiltY = (xPercent * -10).toFixed(2); // max tilt degrees on X axis
+                    
+                    // Set transform values
+                    wrapper.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.01, 1.01, 1.01)`;
+                    img.style.transform = `scale(1.05) translate(${-xPercent * 10}px, ${-yPercent * 10}px)`;
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    // Reset to original positions
+                    wrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    img.style.transform = 'scale(1) translate(0px, 0px)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

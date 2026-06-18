@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical CAD Portfolio | Plan & Design Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Tailwind CSS Configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        cad: {
+                            dark: 'var(--bg-dark)',
+                            panel: 'var(--bg-panel)',
+                            border: 'var(--border-cad)',
+                            accent: '#0ea5e9',  // Sky 500 (CAD selection blue)
+                            accentHover: '#0284c7',
+                            text: 'var(--text-main)',
+                            muted: 'var(--text-muted)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-dark: #f8fafc;
+            --bg-dark-80: rgba(248, 250, 252, 0.8);
+            --bg-panel: #ffffff;
+            --border-cad: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --grid-color: rgba(148, 163, 184, 0.15);
+        }
+        
+        .dark {
+            --bg-dark: #0f172a;
+            --bg-dark-80: rgba(15, 23, 42, 0.8);
+            --bg-panel: #1e293b;
+            --border-cad: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --grid-color: rgba(51, 65, 85, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* CAD-style blueprint grid background */
+        .cad-grid {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, transparent, var(--bg-dark-80) 70%, var(--bg-dark) 100%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-cad);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cad-accent selection:text-white">
+
+    <!-- Navigation Menu -->
+    <nav class="fixed w-full z-50 bg-cad-dark/85 backdrop-blur-md border-b border-cad-border transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2 text-cad-text">
+                        <svg class="w-8 h-8 text-cad-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        EE<span class="text-cad-accent">.DESIGNS</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="flex items-baseline space-x-8">
+                        <a href="#home" class="text-cad-text hover:text-cad-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#portfolio" class="text-cad-text hover:text-cad-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Designs & Schemes</a>
+                    </div>
+                    
+                    <!-- Theme Toggle Button (Desktop) -->
+                    <button id="theme-toggle" class="p-2.5 rounded-lg border border-cad-border bg-cad-panel text-cad-text hover:text-cad-accent transition-colors focus:outline-none" aria-label="Toggle Light/Dark Theme">
+                        <svg id="theme-sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <svg id="theme-moon-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+
+                    <a href="index.html" class="border border-cad-accent hover:bg-cad-accent hover:text-white text-cad-accent px-5 py-2.5 rounded-md text-sm font-medium transition-colors">Back to profile</a>
+                </div>
+
+                <!-- Mobile Actions -->
+                <div class="md:hidden flex items-center space-x-3">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-lg border border-cad-border bg-cad-panel text-cad-text hover:text-cad-accent transition-colors focus:outline-none" aria-label="Toggle Light/Dark Theme">
+                        <svg id="theme-sun-icon-mobile" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <svg id="theme-moon-icon-mobile" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+
+                    <button id="mobile-menu-btn" class="text-cad-muted hover:text-cad-text focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cad-panel border-b border-cad-border">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block text-cad-accent hover:bg-cad-border px-3 py-2 rounded-md text-base font-semibold">Back to profile</a>
+                <a href="#home" class="block text-cad-text hover:bg-cad-border px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#portfolio" class="block text-cad-text hover:bg-cad-border px-3 py-2 rounded-md text-base font-medium">Portfolio</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="cad-grid min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="absolute inset-0 hero-overlay z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="text-center md:text-left max-w-4xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cad-panel border border-cad-border text-sm text-cad-accent mb-6">
+                    <span class="w-2 h-2 rounded-full bg-cad-accent animate-pulse"></span>
+                    Professional Electrical CAD Designer
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-cad-text">
+                    Comprehensive Electrical <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cad-accent to-red-400">Plans, Schedules & SLDs.</span>
+                </h1>
+                <p class="text-lg text-cad-muted mb-10 max-w-3xl mx-auto md:mx-0 leading-relaxed">
+                    This is a curated compilation of my drafting and design work, showcasing my technical proficiency through various <b>AutoCAD Electrical</b> samples and projects.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#portfolio" class="bg-cad-accent hover:bg-cad-accentHover text-white px-8 py-4 rounded-md font-semibold transition-all flex items-center justify-center gap-2 shadow-lg shadow-sky-500/10">
+                        View Sample Works
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 bg-cad-dark relative border-t border-cad-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-cad-text">AutoCAD Projects</h2>
+                <div class="w-24 h-1 bg-cad-accent mx-auto rounded-full mb-6"></div>
+                <p class="text-cad-muted max-w-2xl mx-auto">Explore a Comprehensive Collection of Detailed Electrical Engineering Designs.</p>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-container">
+                <!-- Javascript will inject 22 electrical engineering project cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cad-panel border-t border-cad-border py-12 text-cad-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 text-xl font-bold tracking-tighter">
+                <svg class="w-6 h-6 text-cad-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                EE<span class="text-cad-accent">.DESIGNS</span>
+            </div>
+            <p class="text-cad-muted text-sm text-center md:text-left">
+                &copy; <span id="year"></span> Electrical Design CAD Portfolio.
+            </p>
+    </footer>
+
+    <!-- Lightbox Modal for Images -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 hidden flex flex-col items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white hover:text-cad-accent bg-cad-panel/50 p-2 rounded-full transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="max-w-5xl w-full h-[80vh] relative border-2 border-cad-border rounded-lg overflow-hidden bg-cad-dark flex flex-col items-center justify-center" id="lightbox-content">
+            <!-- Full size view gets injected dynamically here -->
+        </div>
+        <p id="lightbox-caption" class="text-white text-lg mt-4 font-medium tracking-wide text-center max-w-3xl px-4"></p>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.replace('bg-cad-dark/80', 'bg-cad-dark/95');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.replace('bg-cad-dark/95', 'bg-cad-dark/80');
+            }
+        });
+
+        // --- 22 Electrical Vector Blueprints Fallback Generator ---
+        // Generates stunning blueprint schematics dynamically if local images aren't present.
+        function getBlueprintFallback(projectId, isDark) {
+            const bg = isDark ? "#0f172a" : "#ffffff";
+            const border = isDark ? "#334155" : "#cbd5e1";
+            const mainText = isDark ? "#94a3b8" : "#475569";
+            const gridLines = isDark ? "rgba(51, 65, 85, 0.4)" : "rgba(148, 163, 184, 0.15)";
+            const accent = "#0ea5e9";
+            
+            // Standard Circuit / Component colors based on theme
+            const powerColor = isDark ? "#fbbf24" : "#d97706"; // Amber
+            const lightingColor = isDark ? "#38bdf8" : "#0284c7"; // Blue
+            const auxColor = isDark ? "#f43f5e" : "#be123c"; // Crimson
+            const groundColor = isDark ? "#34d399" : "#059669"; // Green
+
+            let innerContent = "";
+
+            if (projectId === 1) { // Residential Lighting Layout
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <line x1="15" y1="50" x2="85" y2="50" stroke="${border}" stroke-dasharray="2 2"/>
+                    <line x1="50" y1="15" x2="50" y2="85" stroke="${border}" stroke-dasharray="2 2"/>
+                    <circle cx="32" cy="32" r="4" fill="none" stroke="${lightingColor}" stroke-width="2"/>
+                    <path d="M 28 32 L 36 32 M 32 28 L 32 36" stroke="${lightingColor}"/>
+                    <circle cx="68" cy="32" r="4" fill="none" stroke="${lightingColor}" stroke-width="2"/>
+                    <path d="M 64 32 L 72 32 M 68 28 L 68 36" stroke="${lightingColor}"/>
+                    <circle cx="32" cy="68" r="4" fill="none" stroke="${lightingColor}" stroke-width="2"/>
+                    <path d="M 28 68 L 36 68 M 32 64 L 32 72" stroke="${lightingColor}"/>
+                    <circle cx="68" cy="68" r="4" fill="none" stroke="${lightingColor}" stroke-width="2"/>
+                    <path d="M 64 68 L 72 68 M 68 64 L 68 72" stroke="${lightingColor}"/>
+                    <path d="M 32 32 Q 50 20 68 32" stroke="${lightingColor}" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+                    <path d="M 32 68 Q 50 80 68 68" stroke="${lightingColor}" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+                    <text x="32" y="42" font-size="3" fill="${mainText}" text-anchor="middle">Dimmer A</text>
+                `;
+            } else if (projectId === 2) { // Residential Power & Convenience Outlets Plan
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Receptacle symbols -->
+                    <circle cx="15" cy="40" r="3" fill="${powerColor}"/>
+                    <line x1="15" y1="40" x2="22" y2="40" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="22" y1="35" x2="22" y2="45" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="20" y1="35" x2="20" y2="45" stroke="${powerColor}" stroke-width="1"/>
+                    
+                    <circle cx="85" cy="40" r="3" fill="${powerColor}"/>
+                    <line x1="85" y1="40" x2="78" y2="40" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="78" y1="35" x2="78" y2="45" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="80" y1="35" x2="80" y2="45" stroke="${powerColor}" stroke-width="1"/>
+
+                    <path d="M 22 40 C 40 40 45 40 78 40" stroke="${powerColor}" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+                    <text x="50" y="32" font-size="3" fill="${mainText}" text-anchor="middle">CKT. 2 (15A)</text>
+                `;
+            } else if (projectId === 3) { // Single-Line Diagram
+                innerContent = `
+                    <line x1="10" y1="20" x2="90" y2="20" stroke="${powerColor}" stroke-width="3"/>
+                    <!-- Utility Transformer symbol -->
+                    <circle cx="50" cy="35" r="7" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <circle cx="50" cy="45" r="7" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="50" y1="20" x2="50" y2="28" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="50" y1="52" x2="50" y2="65" stroke="${powerColor}" stroke-width="2"/>
+                    <!-- MCB Main Breaker -->
+                    <rect x="44" y="65" width="12" height="16" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="44" y1="65" x2="56" y2="81" stroke="${powerColor}" stroke-width="2"/>
+                    <text x="50" y="88" font-size="3" fill="${mainText}" text-anchor="middle">MAIN 225A</text>
+                `;
+            } else if (projectId === 4) { // Substation Layout & Equipment Location
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Transformer box -->
+                    <rect x="35" y="35" width="30" height="30" fill="none" stroke="${powerColor}" stroke-width="3"/>
+                    <ellipse cx="50" cy="50" rx="8" ry="12" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <ellipse cx="50" cy="50" rx="12" ry="8" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <text x="50" y="30" font-size="3" fill="${mainText}" text-anchor="middle">750kVA XFMR</text>
+                    <!-- Boundary Fence -->
+                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="${mainText}" stroke-width="0.5" stroke-dasharray="4 4"/>
+                `;
+            } else if (projectId === 5) { // Industrial Motor Control Circuit
+                innerContent = `
+                    <!-- Control logic line diagram -->
+                    <line x1="15" y1="20" x2="15" y2="80" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="85" y1="20" x2="85" y2="80" stroke="${powerColor}" stroke-width="2"/>
+                    <!-- Stop Pushbutton (Normally Closed) -->
+                    <line x1="15" y1="35" x2="30" y2="35" stroke="${powerColor}" stroke-width="1.5"/>
+                    <line x1="30" y1="32" x2="40" y2="32" stroke="${powerColor}" stroke-width="3"/>
+                    <line x1="40" y1="35" x2="50" y2="35" stroke="${powerColor}" stroke-width="1.5"/>
+                    <!-- Start Pushbutton (Normally Open) -->
+                    <line x1="50" y1="35" x2="57" y2="35" stroke="${powerColor}" stroke-width="1.5"/>
+                    <line x1="57" y1="40" x2="67" y2="33" stroke="${powerColor}" stroke-width="3"/>
+                    <line x1="67" y1="35" x2="73" y2="35" stroke="${powerColor}" stroke-width="1.5"/>
+                    <!-- Relay Coil -->
+                    <circle cx="78" cy="35" r="5" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="83" y1="35" x2="85" y2="35" stroke="${powerColor}" stroke-width="1.5"/>
+                    <text x="78" y="36.5" font-size="4" fill="${powerColor}" text-anchor="middle" font-weight="bold">M</text>
+                `;
+            } else if (projectId === 6) { // Commercial Lightning Protection
+                innerContent = `
+                    <polygon points="50,15 80,45 80,85 20,85 20,45" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Air terminals (Lightning rods) -->
+                    <line x1="50" y1="15" x2="50" y2="5" stroke="${groundColor}" stroke-width="2"/>
+                    <circle cx="50" cy="5" r="1.5" fill="${groundColor}"/>
+                    <line x1="80" y1="45" x2="80" y2="35" stroke="${groundColor}" stroke-width="2"/>
+                    <circle cx="80" cy="35" r="1.5" fill="${groundColor}"/>
+                    <line x1="20" y1="45" x2="20" y2="35" stroke="${groundColor}" stroke-width="2"/>
+                    <circle cx="20" cy="35" r="1.5" fill="${groundColor}"/>
+                    <!-- Grounding grid loops -->
+                    <path d="M 50 15 L 80 45 L 80 85 M 50 15 L 20 45 L 20 85" stroke="${groundColor}" stroke-width="1.5" fill="none"/>
+                `;
+            } else if (projectId === 7) { // Grounding & Earthing Grid Layout
+                innerContent = `
+                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="${groundColor}" stroke-width="1"/>
+                    <!-- Grid mesh lines -->
+                    <line x1="35" y1="20" x2="35" y2="80" stroke="${groundColor}" stroke-width="1"/>
+                    <line x1="50" y1="20" x2="50" y2="80" stroke="${groundColor}" stroke-width="1"/>
+                    <line x1="65" y1="20" x2="65" y2="80" stroke="${groundColor}" stroke-width="1"/>
+                    <line x1="20" y1="35" x2="80" y2="35" stroke="${groundColor}" stroke-width="1"/>
+                    <line x1="20" y1="50" x2="80" y2="50" stroke="${groundColor}" stroke-width="1"/>
+                    <line x1="20" y1="65" x2="80" y2="65" stroke="${groundColor}" stroke-width="1"/>
+                    <!-- Grounding rod nodes -->
+                    <polygon points="35,35 32,41 38,41" fill="${groundColor}"/>
+                    <polygon points="65,35 62,41 68,41" fill="${groundColor}"/>
+                    <polygon points="35,65 32,71 38,71" fill="${groundColor}"/>
+                    <polygon points="65,65 62,71 68,71" fill="${groundColor}"/>
+                `;
+            } else if (projectId === 8) { // Emergency & Exit Lighting Plan
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- EXIT sign symbols -->
+                    <rect x="40" y="15" width="20" height="8" fill="${auxColor}"/>
+                    <text x="50" y="21" font-size="5" fill="#ffffff" font-weight="bold" text-anchor="middle">EXIT</text>
+                    <!-- Directional emergency fixtures -->
+                    <path d="M 25 35 L 35 35 M 30 30 L 30 40" stroke="${auxColor}" stroke-width="2"/>
+                    <circle cx="30" cy="35" r="5" fill="none" stroke="${auxColor}" stroke-width="1.5"/>
+                    <path d="M 65 65 L 75 65 M 70 60 L 70 70" stroke="${auxColor}" stroke-width="2"/>
+                    <circle cx="70" cy="65" r="5" fill="none" stroke="${auxColor}" stroke-width="1.5"/>
+                `;
+            } else if (projectId === 9) { // Structured Cabling & Telecom Layout
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Central MDF rack -->
+                    <rect x="40" y="40" width="20" height="20" fill="none" stroke="${accent}" stroke-width="2"/>
+                    <line x1="40" y1="45" x2="60" y2="45" stroke="${accent}"/>
+                    <line x1="40" y1="50" x2="60" y2="50" stroke="${accent}"/>
+                    <line x1="40" y1="55" x2="60" y2="55" stroke="${accent}"/>
+                    <!-- Cables branching out -->
+                    <path d="M 40 50 L 25 30" stroke="${accent}" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/>
+                    <path d="M 60 50 L 75 30" stroke="${accent}" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/>
+                    <text x="50" y="35" font-size="3.5" fill="${accent}" text-anchor="middle" font-weight="bold">MDF</text>
+                `;
+            } else if (projectId === 10) { // Fire Alarm & Smoke Detection
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Smoke Detector symbol -->
+                    <circle cx="35" cy="35" r="7" fill="none" stroke="${auxColor}" stroke-width="2"/>
+                    <text x="35" y="37.5" font-size="6.5" font-weight="bold" fill="${auxColor}" text-anchor="middle">SD</text>
+                    <!-- Heat Detector symbol -->
+                    <circle cx="65" cy="35" r="7" fill="none" stroke="${auxColor}" stroke-width="2"/>
+                    <text x="65" y="37.5" font-size="6.5" font-weight="bold" fill="${auxColor}" text-anchor="middle">HD</text>
+                    <!-- Fire Alarm Control Panel -->
+                    <rect x="40" y="65" width="20" height="15" fill="none" stroke="${auxColor}" stroke-width="2"/>
+                    <text x="50" y="74" font-size="4" font-weight="bold" fill="${auxColor}" text-anchor="middle">FACP</text>
+                `;
+            } else if (projectId === 11) { // CCTV & Access Control
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Camera symbols (wedge of view) -->
+                    <path d="M 15 15 L 35 25 A 25 25 0 0 1 25 35 Z" fill="rgba(244, 63, 94, 0.2)" stroke="${auxColor}" stroke-width="1"/>
+                    <circle cx="15" cy="15" r="3" fill="${auxColor}"/>
+                    <!-- Access Control Card Reader -->
+                    <rect x="45" y="45" width="10" height="15" fill="none" stroke="${auxColor}" stroke-width="2"/>
+                    <rect x="48" y="48" width="4" height="4" fill="${auxColor}"/>
+                `;
+            } else if (projectId === 12) { // Commercial Panelboard Schedule
+                innerContent = `
+                    <!-- Grid sheet/Load schedule table -->
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <line x1="15" y1="30" x2="85" y2="30" stroke="${border}"/>
+                    <line x1="15" y1="45" x2="85" y2="45" stroke="${border}"/>
+                    <line x1="15" y1="60" x2="85" y2="60" stroke="${border}"/>
+                    <line x1="35" y1="15" x2="35" y2="85" stroke="${border}"/>
+                    <line x1="60" y1="15" x2="60" y2="85" stroke="${border}"/>
+                    <text x="25" y="24" font-size="3" fill="${mainText}" text-anchor="middle">CKT NO.</text>
+                    <text x="47" y="24" font-size="3" fill="${mainText}" text-anchor="middle">LOAD DESC</text>
+                    <text x="72" y="24" font-size="3" fill="${mainText}" text-anchor="middle">AMPS / VA</text>
+                    <text x="25" y="40" font-size="3" fill="${powerColor}" text-anchor="middle">1, 3, 5</text>
+                    <text x="47" y="40" font-size="3" fill="${mainText}" text-anchor="middle">A/C Units</text>
+                    <text x="72" y="40" font-size="3" fill="${powerColor}" text-anchor="middle">4500 VA</text>
+                `;
+            } else if (projectId === 13) { // Solar PV Rooftop Array Design
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Grid of PV panels -->
+                    <g stroke="${groundColor}" stroke-width="1.5" fill="none">
+                        <rect x="20" y="25" width="16" height="10"/>
+                        <rect x="42" y="25" width="16" height="10"/>
+                        <rect x="64" y="25" width="16" height="10"/>
+                        <rect x="20" y="45" width="16" height="10"/>
+                        <rect x="42" y="45" width="16" height="10"/>
+                        <rect x="64" y="45" width="16" height="10"/>
+                    </g>
+                    <!-- Inverter connection -->
+                    <rect x="40" y="68" width="20" height="12" fill="none" stroke="${groundColor}" stroke-width="2"/>
+                    <line x1="40" y1="74" x2="60" y2="74" stroke="${groundColor}"/>
+                    <text x="50" y="73" font-size="3" fill="${groundColor}" text-anchor="middle">PV INVERTER</text>
+                `;
+            } else if (projectId === 14) { // Uninterruptible Power Supply (UPS) Room Layout
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Battery banks -->
+                    <rect x="20" y="25" width="15" height="40" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="20" y1="35" x2="35" y2="35" stroke="${powerColor}"/>
+                    <line x1="20" y1="45" x2="35" y2="45" stroke="${powerColor}"/>
+                    <line x1="20" y1="55" x2="35" y2="55" stroke="${powerColor}"/>
+                    
+                    <rect x="65" y="25" width="15" height="40" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <line x1="65" y1="35" x2="80" y2="35" stroke="${powerColor}"/>
+                    <line x1="65" y1="45" x2="80" y2="45" stroke="${powerColor}"/>
+                    <line x1="65" y1="55" x2="80" y2="55" stroke="${powerColor}"/>
+                    
+                    <text x="42" y="48" font-size="3.5" fill="${mainText}">UPS racks</text>
+                `;
+            } else if (projectId === 15) { // Generator Set Room
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Gen Engine outline -->
+                    <rect x="30" y="30" width="40" height="24" fill="none" stroke="${powerColor}" stroke-width="3"/>
+                    <circle cx="50" cy="42" r="6" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <!-- Exhaust path -->
+                    <path d="M 70 42 L 85 42 L 85 25" stroke="${powerColor}" stroke-width="1.5" fill="none"/>
+                    <rect x="75" y="38" width="8" height="8" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <text x="50" y="65" font-size="3.5" fill="${mainText}" text-anchor="middle">500kVA GENSET</text>
+                `;
+            } else if (projectId === 16) { // Street Lighting & External Power Distribution
+                innerContent = `
+                    <line x1="10" y1="50" x2="90" y2="50" stroke="${border}" stroke-width="5"/>
+                    <!-- Light poles and coverage rings -->
+                    <circle cx="25" cy="50" r="1.5" fill="${lightingColor}"/>
+                    <circle cx="25" cy="50" r="20" fill="none" stroke="${lightingColor}" stroke-width="0.75" stroke-dasharray="3 3"/>
+                    
+                    <circle cx="75" cy="50" r="1.5" fill="${lightingColor}"/>
+                    <circle cx="75" cy="50" r="20" fill="none" stroke="${lightingColor}" stroke-width="0.75" stroke-dasharray="3 3"/>
+                    
+                    <text x="50" y="42" font-size="3.5" fill="${mainText}" text-anchor="middle">STREET HIGHWAY WAYPOINT</text>
+                `;
+            } else if (projectId === 17) { // HVAC Power Connection Layout
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Condenser unit block -->
+                    <rect x="30" y="30" width="40" height="25" fill="none" stroke="${powerColor}" stroke-width="2"/>
+                    <circle cx="40" cy="42" r="5" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <circle cx="60" cy="42" r="5" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <!-- Isolator switch -->
+                    <rect x="45" y="65" width="10" height="10" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <text x="50" y="78" font-size="3" fill="${mainText}" text-anchor="middle">ACCU POWER POINT</text>
+                `;
+            } else if (projectId === 18) { // Smart Home Automation Wiring
+                innerContent = `
+                    <circle cx="50" cy="50" r="12" fill="none" stroke="${lightingColor}" stroke-width="2.5"/>
+                    <text x="50" y="52" font-size="4.5" font-weight="bold" fill="${lightingColor}" text-anchor="middle">CPU</text>
+                    <!-- Spreading nodes -->
+                    <path d="M 50 38 L 50 20 M 50 62 L 50 80 M 38 50 L 20 50 M 62 50 L 80 50" stroke="${lightingColor}" stroke-width="1.5"/>
+                    <circle cx="50" cy="20" r="3" fill="${lightingColor}"/>
+                    <circle cx="50" cy="80" r="3" fill="${lightingColor}"/>
+                    <circle cx="20" cy="50" r="3" fill="${lightingColor}"/>
+                    <circle cx="80" cy="50" r="3" fill="${lightingColor}"/>
+                    <text x="50" y="15" font-size="3" fill="${mainText}" text-anchor="middle">Dimmer</text>
+                `;
+            } else if (projectId === 19) { // Busway / Busduct Distribution
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Busway copper track representation -->
+                    <line x1="35" y1="15" x2="35" y2="85" stroke="${powerColor}" stroke-width="3"/>
+                    <line x1="42" y1="15" x2="42" y2="85" stroke="${powerColor}" stroke-width="3"/>
+                    <!-- Feed tap boxes -->
+                    <rect x="42" y="30" width="12" height="10" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <rect x="42" y="55" width="12" height="10" fill="none" stroke="${powerColor}" stroke-width="1.5"/>
+                    <text x="65" y="42" font-size="3.5" fill="${mainText}" text-anchor="middle">TAP-OFF</text>
+                `;
+            } else if (projectId === 20) { // Underfloor Cable Trunking
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Double lines for trunking channels -->
+                    <line x1="25" y1="15" x2="25" y2="85" stroke="${accent}" stroke-width="1.5" stroke-dasharray="1 1"/>
+                    <line x1="28" y1="15" x2="28" y2="85" stroke="${accent}" stroke-width="1.5" stroke-dasharray="1 1"/>
+                    <line x1="65" y1="15" x2="65" y2="85" stroke="${accent}" stroke-width="1.5" stroke-dasharray="1 1"/>
+                    <line x1="68" y1="15" x2="68" y2="85" stroke="${accent}" stroke-width="1.5" stroke-dasharray="1 1"/>
+                    <!-- Flush outlets -->
+                    <rect x="22" y="45" width="10" height="10" fill="none" stroke="${accent}" stroke-width="2"/>
+                    <rect x="62" y="45" width="10" height="10" fill="none" stroke="${accent}" stroke-width="2"/>
+                    <text x="45" y="50" font-size="3.5" fill="${mainText}" text-anchor="middle">SERVICE OUTLETS</text>
+                `;
+            } else if (projectId === 21) { // Hazardous Area Classification
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Hazard circles -->
+                    <circle cx="50" cy="50" r="22" fill="none" stroke="${auxColor}" stroke-dasharray="4 4" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="10" fill="none" stroke="${auxColor}" stroke-dasharray="2 2" stroke-width="2"/>
+                    <text x="50" y="42" font-size="3" fill="${auxColor}" text-anchor="middle" font-weight="bold">ZONE 1</text>
+                    <text x="50" y="78" font-size="3" fill="${mainText}" text-anchor="middle">EXPLOSION-PROOF PATHWAYS</text>
+                `;
+            } else if (projectId === 22) { // Cable Tray Routing
+                innerContent = `
+                    <rect x="15" y="15" width="70" height="70" fill="none" stroke="${border}" stroke-width="2"/>
+                    <!-- Cable Tray ladder steps -->
+                    <line x1="20" y1="40" x2="80" y2="40" stroke="${accent}" stroke-width="4"/>
+                    <line x1="20" y1="48" x2="80" y2="48" stroke="${accent}" stroke-width="4"/>
+                    <!-- Rungs -->
+                    <line x1="28" y1="40" x2="28" y2="48" stroke="${accent}" stroke-width="1.5"/>
+                    <line x1="38" y1="40" x2="38" y2="48" stroke="${accent}" stroke-width="1.5"/>
+                    <line x1="48" y1="40" x2="48" y2="48" stroke="${accent}" stroke-width="1.5"/>
+                    <line x1="58" y1="40" x2="58" y2="48" stroke="${accent}" stroke-width="1.5"/>
+                    <line x1="68" y1="40" x2="68" y2="48" stroke="${accent}" stroke-width="1.5"/>
+                    <text x="50" y="32" font-size="3.5" fill="${mainText}" text-anchor="middle">SUSPENDED LADDER TRAY</text>
+                `;
+            }
+
+            const svgString = `
+                <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" fill="${bg}"/>
+                    <defs>
+                        <pattern id="grid_pattern_${projectId}" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="${gridLines}" stroke-width="0.35"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100" height="100" fill="url(#grid_pattern_${projectId})" />
+                    ${innerContent}
+                </svg>
+            `;
+            return "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgString)));
+        }
+
+        // Fallback execution handler for missing files
+        window.handleImageError = function(imgElement, projectId) {
+            const isDark = document.documentElement.classList.contains('dark');
+            imgElement.src = getBlueprintFallback(projectId, isDark);
+            imgElement.onerror = null; 
+        };
+
+        // --- 22 Electrical Projects Portfolio Array ---
+        // You can swap out the relative file path for 'image' to immediately render your AutoCAD assets.
+        const projects = [
+            {
+                id: 1,
+                title: "Design No. 1",
+                category: "lighting",
+                image: "Electrical 1.jpg"
+            },
+            {
+                id: 2,
+                title: "Design No. 2",
+                category: "power",
+                image: "Electrical 2.jpg"
+            },
+            {
+                id: 3,
+                title: "Design No. 3",
+                category: "power",
+                image: "Electrical 3.jpg"
+            },
+            {
+                id: 4,
+                title: "Design No. 4",
+                category: "industrial",
+                image: "Electrical 4.jpg"
+            },
+            {
+                id: 5,
+                title: "Design No. 5",
+                category: "industrial",
+                image: "Electrical 5.jpg"
+            },
+            {
+                id: 6,
+                title: "Design No. 6",
+                category: "industrial",
+                image: "Electrical 6.jpg"
+            },
+            {
+                id: 7,
+                title: "Design No. 7",
+                category: "industrial",
+                image: "Electrical 7.jpg"
+            },
+            {
+                id: 8,
+                title: "Design No. 8",
+                category: "lighting",
+                image: "Electrical 8.jpg"
+            },
+            {
+                id: 9,
+                title: "Design No. 9",
+                category: "auxiliary",
+                image: "Electrical 9.jpg"
+            },
+            {
+                id: 10,
+                title: "Design No. 10",
+                category: "auxiliary",
+                image: "Electrical 10.jpg"
+            },
+            {
+                id: 11,
+                title: "Design No. 11",
+                category: "auxiliary",
+                image: "Electrical 11.jpg"
+            },
+        ];
+
+        const galleryContainer = document.getElementById('gallery-container');
+
+        // --- Render Engine with Filter capability ---
+        function renderProjects(filterCategory = 'all') {
+            const isDark = document.documentElement.classList.contains('dark');
+            galleryContainer.innerHTML = '';
+            
+            projects.forEach(project => {
+                if (filterCategory !== 'all' && project.category !== filterCategory) {
+                    return;
+                }
+
+                // Unified styling classes for all categories using CAD Selection Blue (Lighting style)
+                const catColor = "bg-sky-500/10 text-sky-500 border border-sky-500/20";
+
+                const cardHTML = `
+                    <div class="project-card group relative bg-cad-panel rounded-xl overflow-hidden border border-cad-border shadow-lg cursor-pointer transform transition-all duration-300 hover:-translate-y-2" onclick="openLightbox(${project.id})">
+                        <!-- Image Layout Frame -->
+                        <div class="relative h-64 w-full overflow-hidden bg-cad-dark">
+                            <img src="${project.image}" 
+                                 alt="${project.title}" 
+                                 onerror="handleImageError(this, ${project.id})" 
+                                 class="project-image w-full h-full object-cover transition-transform duration-500" />
+                            
+                            <!-- Blueprint Overlay on Hover -->
+                            <div class="project-overlay absolute inset-0 bg-cad-dark/80 backdrop-blur-sm opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                                <span class="bg-cad-accent text-white px-4 py-2 rounded-full font-medium flex items-center gap-2 text-sm shadow-md">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    View Full Blueprint
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Block Info -->
+                        <div class="p-6">
+                            <div class="mb-3 flex justify-between items-start">
+                                <h3 class="text-lg font-bold text-cad-text group-hover:text-cad-accent transition-colors leading-snug">${project.title}</h3>
+                            </div>
+                            <span class="inline-block px-2.5 py-1 text-xs font-semibold rounded-md uppercase tracking-wider ${catColor}">
+                                ${project.category}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                galleryContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        // Initialize view with all 22 projects
+        renderProjects();
+
+        // --- Theme Toggling (Light / Dark Mode) ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+        const sunIcons = [document.getElementById('theme-sun-icon'), document.getElementById('theme-sun-icon-mobile')];
+        const moonIcons = [document.getElementById('theme-moon-icon'), document.getElementById('theme-moon-icon-mobile')];
+
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            sunIcons.forEach(icon => {
+                if (isDark) icon.classList.remove('hidden');
+                else icon.classList.add('hidden');
+            });
+            moonIcons.forEach(icon => {
+                if (!isDark) icon.classList.remove('hidden');
+                else icon.classList.add('hidden');
+            });
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+            updateThemeIcons();
+            
+            // Re-render all designs upon theme shift
+            renderProjects('all');
+        }
+
+        if (localStorage.getItem('color-theme') === 'light' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+        updateThemeIcons();
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+
+        // --- Lightbox Modal Logic ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const closeLightboxBtn = document.getElementById('close-lightbox');
+
+        window.openLightbox = function(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            // Injected dynamic img using full 'src' tag path
+            lightboxContent.innerHTML = `
+                <img src="${project.image}" 
+                     alt="${project.title}" 
+                     onerror="handleImageError(this, ${project.id})" 
+                     class="max-w-full max-h-full object-contain p-2" />
+                <div class="absolute top-4 left-4 bg-cad-panel/80 backdrop-blur px-3 py-1 rounded text-xs font-mono border border-cad-border text-cad-accent">FILE: ${project.title.replace(/\s+/g, '_').toUpperCase()}.DWG</div>
+            `;
+            
+            lightboxCaption.textContent = project.title + " - " + project.description;
+            
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; 
+        };
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxContent.innerHTML = '';
+            }, 300);
+            
+            document.body.style.overflow = 'auto'; 
+        }
+
+        closeLightboxBtn.addEventListener('click', closeLightbox);
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.closest('#lightbox-content') === null && e.target !== closeLightboxBtn) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
+
+    </script>
+</body>
+</html>
